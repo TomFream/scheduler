@@ -1,46 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import DayList from "components/DayList";
 import "components/Application.scss";
 import Appointment from "./Appointment";
-import {getAppointmentsForDay, getInterview} from "../helpers/selectors";
-import axios from "axios";
+import {getAppointmentsForDay, getInterview, getInterviewerForDay} from "../helpers/selectors";
+import useApplicationData from "../hooks/useApplicationData"
 
 export default function Application(props) {
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
-  const setDay = day => setState({ ...state, day });
-  const dailyAppointments = getAppointmentsForDay(state, state.day)
 
-  const schedule = dailyAppointments.map((appointment) => {
-    const interview = getInterview(state, appointment.interview);
-  
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview,
+  } = useApplicationData();
+
+  const interviewers = getInterviewerForDay(state, state.day);
+
+  const schedule = getAppointmentsForDay(state, state.day).map((appointment) => {
+
     return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={interview}
+        interview={getInterview(state, appointment.interview)}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
-
-  useEffect(() => {
-    const daysURL = '/api/days'; 
-    const appointmentsURL = '/api/appointments';
-    const interviewersURL = '/api/interviewers';
-    Promise.all([
-      axios.get(daysURL),
-      axios.get(appointmentsURL),
-      axios.get(interviewersURL)
-    ]).then(all => {
-      console.log("INterviewers: ", all[2].data)
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
-    });
-  }, []);
 
   return (
     <main className="layout">
@@ -65,7 +54,6 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-
       <section className="schedule">
         {schedule}
         <Appointment key="last" time="5pm" />
