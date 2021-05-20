@@ -1,5 +1,4 @@
 import { getAppointmentsForDay, getInterview, getInterviewerForDay } from "helpers/selectors";
-import { arrayOf } from "prop-types";
 
 // Test Data
 const state = {
@@ -93,22 +92,6 @@ test("getInterviewerForDay returns an array with a length matching the number of
   expect(result.length).toEqual(1);
 });
 
-// test("getInterviewerForDay returns an array containing the correct interviewer objects", () => {
-//   const [first, second] = getInterviewerForDay(state, "moday");
-//   expect(first).toEqual(state.interviewers["1"]);
-//   expect(second).toEqual(state.interviewers["2"]);
-// });
-
-// test("getInterviewerForDay returns an array containing the correct interviewer objects", () => {
-//   const result = getInterviewerForDay(state, "moday");
-//   expect(result).toBe(
-//     expect.objectContaining({
-//       id: expect.any(Number),
-//       name: expect.any(String),
-//       avatar: expect.any(String)
-//     })
-//   )
-// });
 test("getInterviewerForDay returns an array containing the correct interviewer objects", () => {
   const result = getInterviewerForDay(state, "moday");
   expect(Array.isArray(result)).toBe(true);
