@@ -42,7 +42,6 @@ export default function Appointment(props)  {
       })
       .catch((err) => {
         transition(ERROR_SAVE, true)
-        console.log("Error: ", err)
       })
   }
 
@@ -55,7 +54,6 @@ export default function Appointment(props)  {
       })
       .catch((err) => {
         transition(ERROR_DELETE, true)
-        console.log("Error: ", err);
       })
   }
 
@@ -113,7 +111,7 @@ export default function Appointment(props)  {
       {mode === ERROR_SAVE &&
         <Error 
           message={"Error saving appointment"}
-          onClose={() => (transition(EMPTY))}
+          onClose={() => (transition(CREATE))}
         />
       }
     </article>
