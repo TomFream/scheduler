@@ -1,8 +1,6 @@
 import React from "react";
 
-export default function(props) {
-
-
+export default function (props) {
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
@@ -29,5 +27,5 @@ export default function(props) {
         </section>
       </section>
     </main>
-  )
+  );
 }
