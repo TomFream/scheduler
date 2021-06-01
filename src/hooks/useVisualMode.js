@@ -7,8 +7,8 @@ export default function useVisualMode(initial) {
   function transition(change, replace = false) {
     if (!replace) {
       setHistory((prev) => [...prev, change]);
-    }
-    setHistory((prev) => [...prev.slice(0, -1), change]);
+    } else setHistory((prev) => [...prev.slice(0, -1), change]);
+
     setMode(change);
   }
 
