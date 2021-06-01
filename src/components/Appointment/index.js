@@ -28,11 +28,11 @@ export default function Appointment(props) {
   );
 
   function save(name, interviewer) {
-    transition(SAVING);
     const interview = {
       student: name,
       interviewer,
     };
+    transition(SAVING);
 
     props
       .bookInterview(props.id, interview)
@@ -97,13 +97,13 @@ export default function Appointment(props) {
       {mode === ERROR_DELETE && (
         <Error
           message={"Error deleting appointment"}
-          onClose={() => transition(SHOW)}
+          onClose={() => back()}
         />
       )}
       {mode === ERROR_SAVE && (
         <Error
           message={"Error saving appointment"}
-          onClose={() => transition(CREATE)}
+          onClose={() => back()}
         />
       )}
     </article>
